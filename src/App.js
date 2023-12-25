@@ -5,7 +5,7 @@ import Header from "./components/Pages/Header";
 import Products from "./components/Products/Products";
 import "slick-carousel/slick/slick.css";
 import ProductDetails from "./components/Products/ProductDetails";
-import Footer from "./components/Pages/Footer";
+import Footer from "./components/helpers/Footer";
 
 export const MyContext = createContext();
 
