@@ -14,15 +14,15 @@ const Header = () => {
     const { itemAmount } = useContext(cartContext);
 
     window.addEventListener("scroll", ()=>{
-        if(window.scrollY > 50){
+        if(window.scrollY > 30){
             setHeaderFixed(true);
         }else{
             setHeaderFixed(false);
         }
     })
   return (
-    <div className={`flex justify-between ${headerFixed ? "bg-white shadow-md" : "bg-none"} fixed w-full z-50 px-10 py-4  transition-all`}>
-        <Link to="/" className="logo flex  p-1 text-lg gap-2 items-center">
+    <div className={`flex justify-between ${headerFixed ? "bg-white shadow-md sticky top-0 z-50 w-full" : "bg-white"} w-full h-16 px-8 sticky top-0 z-50  transition-all`}>
+        <Link to="/" className="logo flex px-4 text-lg gap-2 items-center">
             
             <div className="logo-icon text-2xl">
                 <FiShoppingCart /> 
@@ -35,7 +35,7 @@ const Header = () => {
         <div className="other flex items-center text-lg">
             <div 
                 onClick={() => { setIsOpen(!isOpen); console.log("Clicked"); }}
-                className="wishlist text-2xl">
+                className="wishlist text-2xl pr-3">
                 <FiHeart className=" cursor-pointer"/>
             </div>
             <div 
@@ -47,7 +47,7 @@ const Header = () => {
                 </div>
             </div>
             <div className="login-btn">
-                <button className="pl-5 pr-3 cursor-pointer">Login</button>
+                <button className="pl-7 pr-3 cursor-pointer">Login</button>
             </div>
         </div>
     </div>

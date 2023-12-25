@@ -40,11 +40,13 @@ const Products = () => {
           </ul>
         </div>
       </div>
-      <div className="grid items-end place-items-center xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 max-w-full mx-auto space-y-10 space-x-1 min-h-[80vh] py-2 px-4">
+      <div className="grid items-end place-items-center sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 max-w-full mx-auto space-y-10 space-x-1 min-h-[80vh] py-2 px-4">
         {items.map((product) => (
           <Product key={product.id} product={product} />
         ))}
       </div>
+      
+
     </div>
   );
 };
