@@ -8,7 +8,6 @@ import NewArrivals from '../helpers/NewArrivals';
 import ProductOfYear from '../helpers/ProductOfYear';
 import SpecialOffers from '../helpers/SpecialOffers';
 
-const desc = "we have the largest collection of products";
 
 const Body = () => {
   const { products } = useContext(MyContext);
