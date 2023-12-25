@@ -1,29 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaS, FaXTwitter} from 'react-icons/fa6';
-import { SlCallOut } from "react-icons/sl";
 import { FaFacebookF, FaDiscord, FaGithub } from "react-icons/fa";
 
 const Footer = () => {
   return (
-      // <div className="w-full p-4 text-center bg-slate-700 text-white flex justify-between">
-      //   <div className="footer-left flex items-center">
-      //     <p>Copyright © 2023 </p> 
-      //     <span className="font-bold flex items-center relative pl-2">
-      //       <span className="text-[16px]">
-      //         <FaS/>
-      //       </span>
-      //       <span className="absolute left-[22px]">hoppika</span>
-      //     </span>
-      //   </div>
-        
-      //   <div className="footer-right flex items-center gap-2 text-lg">
-      //     <SlCallOut/>
-      //     <p>Contact us</p>
-      //   </div>
-      // </div>
-      
-
       <div class="bg-[#F5F5F3]  w-full">
           <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
               <div class="md:flex md:justify-between">
