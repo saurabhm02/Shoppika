@@ -4,7 +4,6 @@ import Body from "./components/Pages/Body";
 import Header from "./components/Pages/Header";
 import Products from "./components/Products/Products";
 import Footer from "./components/Pages/Footer";
-
 import "slick-carousel/slick/slick.css";
 import ProductDetails from "./components/Products/ProductDetails";
 
