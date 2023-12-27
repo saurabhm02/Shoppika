@@ -5,18 +5,24 @@ import { wishlistContext } from '../utils/WishlistContext';
 import { sidebarContext } from '../utils/SidebarContext';
 import Sidebar from '../Pages/Sidebar';
 import { MyContext } from '../../App';
-import { BsBoxArrowLeft } from "react-icons/bs";
 import { HiOutlineChevronRight } from "react-icons/hi";
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../redux/cartSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import { addToWishlist } from '../redux/wishlistSlice';
 
 
 
 const ProductDetails = () => {
   const { title } = useParams();
   const { products } = useContext(MyContext);
-  const { addToCart} = useContext(cartContext);
-  const { addToWishlist } = useContext(wishlistContext);
+//   const { addToCart} = useContext(cartContext);
+//   const { addToWishlist } = useContext(wishlistContext);
   const { isOpen, setIsOpen } = useContext(sidebarContext);
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+ 
+
   
   const product = products.find((product) => {
     return product.title === title;
@@ -32,11 +38,39 @@ const ProductDetails = () => {
     )
   }
    
-  const {thumbnail, brand, price, description} = product;
+  const {id , brand, price, description} = product;
+
+  const addProductHandler = () => {
+    dispatch(addToCart(id)); // Assuming you want to add one item
+    toast.success(`Success. ${title} is in the cart!`, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+  const addwishlistProductHandler = () =>{
+    dispatch(addToWishlist(id));
+    toast.success(`Success. ${product.title} is in wishList!`, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+  });
+  }
 
   return (
     <div className=" h-full lg:pt-0 lg:mt-32 md:pt-24 lg:pb-[200px] sm:pt-2 sm:pb-[120px] md:pb-12 lg:py-32 flex items-center lg:overflow-hidden">
         <Sidebar></Sidebar>
+        <ToastContainer/>
         <div className="mx-auto flex flex-col gap-4">
             <div className="w-full flex flex-col gap-3 lg:mt-0 sm:mt-10 lg:ml-14 sm:ml-2">
                 <h1 className="text-3xl inline-block font-bold lg:mt-0 sm:mt-10 sm:text-lg">
@@ -84,16 +118,12 @@ const ProductDetails = () => {
 
                     <div className="btn flex flex-wrap justify-between lg:pb-0 sm:pb-20">
                         <button className="bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-indigo-300 via-red-300 to-yellow-200 text-lg font-semibold py-2 px-10 rounded-xl h-full"
-                            onClick={()=>{
-                                addToCart(product, product.id);
-                            }}
+                            onClick={addProductHandler}
                         >
                             Add to cart
                         </button>
                         <button className="bg-red-400 text-lg text-white font-semibold py-2 px-10 rounded-xl h-full"
-                            onClick={() =>{
-                                addToWishlist(product, product.id);
-                            }}
+                            onClick={addwishlistProductHandler}
                         >
                             Add to wishlist
                         </button>

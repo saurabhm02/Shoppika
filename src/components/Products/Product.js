@@ -4,6 +4,10 @@ import { FaStar } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import { FiHeart } from "react-icons/fi";
 import { wishlistContext } from '../utils/WishlistContext';
+import { useDispatch } from 'react-redux';
+import { addToWishlist } from '../redux/wishlistSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 
 const truncateTitle = (title, maxLength) => {
@@ -14,7 +18,7 @@ const truncateTitle = (title, maxLength) => {
 };
 
 const Product = ({ product }) => {
-  const { addToWishlist } = useContext(wishlistContext);
+  // const { addToWishlist } = useContext(wishlistContext);
   const actualPrice = (product.price * 100) / (100 - product.discountPercentage);
   const truncatedTitle = truncateTitle(product.title, 25);
 
@@ -24,8 +28,26 @@ const Product = ({ product }) => {
   const [isHovered, setHovered] = useState(false);
   const isSmallScreen = window.innerWidth <= 640;
 
+  const dispatch = useDispatch();
+
+  const addProductHandler = () =>{
+    dispatch(addToWishlist(product.id));
+    toast.success(`Success. ${product.title} is in wishList!`, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+  });
+  }
+
+
   return (
     <div className="lg:w-[240px] md:w-[240px] group hover:shadow-xl transition-all duration-2000 ease-in-out relative group sm:w-[320px]">
+      <ToastContainer/>
       <div className="img relative"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -53,7 +75,7 @@ const Product = ({ product }) => {
         <div className="p-1 absolute bottom-2 left-2 bg-white bg-opacity-70 text-xs font-semibold rounded z-10 flex items-center">
           {rating} <span className="pl-1 pr-1 text-sm text-green-600"><FaStar /></span> | {ratingsCount}
         </div>
-        <div onClick={() => addToWishlist(product, id)}>
+        <div onClick={addProductHandler}>
           <div className="absolute bottom-2 right-2 p-1 text-lg bg-white bg-opacity-70 rounded-full cursor-pointer hover:text-xl sm:inline-block lg:hidden">
             <FiHeart />
           </div>
@@ -70,7 +92,9 @@ const Product = ({ product }) => {
 
           <div className="wishlist absolute z-20 w-full text-lg translate-y-32 lg:flex items-center gap-1 top-20 transform  group-hover:translate-y-0 transition-transform cursor-pointer duration-500 sm:hidden ">
             <button onClick={() => addToWishlist(product, id)}>
-              <div className="absolute w-full bottom-8  p-1  bg-white bg-opacity-70  flex items-center justify-center gap-5  hover:border-black border-2">
+              <div 
+                onClick={addProductHandler}
+                className="absolute w-full bottom-8  p-1  bg-white bg-opacity-70  flex items-center justify-center gap-5  hover:border-black border-2">
                 <FiHeart /> Wishlist
               </div>
             </button>
