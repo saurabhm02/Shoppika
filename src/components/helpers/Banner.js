@@ -97,7 +97,7 @@ const Banner = () => {
             alt="bannertwo"
             className="w-full h-full relative "
           />
-          <BannerText title="Everest Shoppika" />s
+          <BannerText title="Everest Shoppika" />
         </div>
         <div className="w-full h-full relative">
           <img

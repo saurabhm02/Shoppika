@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const BannerText = ({ title }) => {
   return (
-    <div className=" inline-block absolute w-full h-full max-w-screen-xl lg:top-20 lg:left-24 md:top-12 md:left-14 sm:mx-auto sm:px-4 xl:px-0 sm:py-10 sm:top-[-30px] sm:left-2">
+    <div className=" inline-block absolute w-full h-full max-w-screen-xl lg:top-20 lg:left-24 md:top-12 md:left-14 sm:mx-auto sm:px-4 xl:px-0 sm:py-8 sm:top-[-30px] sm:left-2">
       <motion.h2
         initial={{ y: 30, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}

@@ -27,9 +27,9 @@ const Body = () => {
   };
 
   return (
-    <div className=" w-[100vw] h-[100vh] overflow-x-hidden">
+    <div className=" w-[100vw] pt-16 ">
       <Banner/>
-      <div className="max-w-container mx-auto px-4">
+      <div className="mx-auto px-4">
         <Sale/>
         <NewArrivals/>
         <ProductOfYear/>

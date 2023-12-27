@@ -30,7 +30,7 @@ const ProductsPagination = ({ itemsPerPage, products, setProducts, selectedCateg
   }, [selectedCategories, selectedBrands]);
 
   return (
-    <div>
+    <div className="relative">
       <motion.div
         initial={{ y: 50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -39,21 +39,23 @@ const ProductsPagination = ({ itemsPerPage, products, setProducts, selectedCateg
       >
         <ProductItem currentItems={currentItems} />
       </motion.div>
-      <ReactPaginate
-        nextLabel=""
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={3}
-        marginPagesDisplayed={2}
-        pageCount={pageCount}
-        previousLabel=""
-        pageLinkClassName="w-9 h-9 border-[1px] border-lightColor hover:border-gray-500 duration-300 flex justify-center items-center"
-        pageClassName="mr-6"
-        containerClassName="flex text-base font-semibold font-titleFont py-8 lg:px-10"
-        activeClassName="bg-black text-white"
-      />
-      <p className="text-base font-normal text-lightText lg:px-10">
-        Products from {itemStart} to {endOffset} of {filteredProducts.length}
-      </p>
+      <div className="flex flex-row lg:justify-between items-center sm:justify-center px-2">
+        <ReactPaginate
+          nextLabel=""
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+          pageCount={pageCount}
+          previousLabel=""
+          pageLinkClassName="w-9 h-9 border-[1px] border-lightColor hover:border-gray-500 duration-300 flex justify-center items-center"
+          pageClassName="mr-6"
+          containerClassName="flex text-base font-semibold font-titleFont py-8 "
+          activeClassName="bg-black text-white"
+        />
+        <p className="text-base lg:inline-block font-normal sm:hidden px-16">
+          Products from {itemStart} to {endOffset} of {filteredProducts.length}
+        </p>
+      </div>
     </div>
   );
 };

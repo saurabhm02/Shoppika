@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { GoTriangleDown } from 'react-icons/go';
 import { HiOutlineSortDescending, HiOutlineSortAscending } from "react-icons/hi";
@@ -15,24 +15,13 @@ const ProductsBanner = ({
 }) => {
   const categories = ["smartphones", "Clothings", "laptops", "cap", "fragrances", "skincare", "groceries", "shoes", "home-decoration", "electronics"];
   const [show, setShow] = useState(false);
-  const ref = useRef();
-  useEffect(() => {
-    document.body.addEventListener("click", (e) => {
-      if (ref.current.contains(e.target)) {
-        setShow(true);
-      } else {
-        setShow(false);
-      }
-    });
-  }, [show, ref]);
 
   return (
-    <div className="flex items-center gap-2 md:gap-6 mt-4 md:mt-0 py-2 absolute lg:right-12 sm:right-6">
+    <div className="flex items-center gap-2 md:gap-6 mt-4 md:mt-0 py-2 absolute lg:right-36 sm:right-6">
 
       <div className="flex items-center gap-2 text-[#767676] relative lg:hidden sm:pr-16">
         <div
         onClick={() => setShow(!show)}
-        ref={ref}
         className="flex h-14 cursor-pointer items-center gap-2 text-xl "
       >
         {/* {show ? <HiOutlineSortAscending className="w-10 h-8 " /> : <HiOutlineSortDescending className="w-10 h-8 "/>} */}
@@ -65,7 +54,7 @@ const ProductsBanner = ({
         </div>
       </div>
 
-      <div className="flex items-center gap-2 text-[#767676] relative hidden">
+      <div className=" items-center gap-2 text-[#767676] relative hidden">
         <label className="block">Category:</label>
         <select
           onChange={(e) => {
@@ -101,7 +90,7 @@ const ProductsBanner = ({
           <option value="Low to High">Price: Low to High</option>
           <option value="High to Low">Price: High to Low</option>
         </select>
-        <span className="absolute text-sm right-2 md:right-4 sm:right-8 top-2.5">
+        <span className="absolute text-lg lg:right-10 md:right-4 sm:right-8 top-2">
           <GoTriangleDown />
         </span>
       </div>
@@ -120,7 +109,7 @@ const ProductsBanner = ({
           <option value="36">36</option>
           <option value="48">48</option>
         </select>
-        <span className="absolute text-sm right-3 top-2.5">
+        <span className="absolute text-lg right-3 top-2">
           <GoTriangleDown />
         </span>
       </div>

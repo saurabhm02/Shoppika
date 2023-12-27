@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { MyContext } from '../../App';
-import ProductSideBar from '../helpers/ProductSideBar';
+import ProductSideBar from './ProductSideBar';
 import ProductsBanner from '../helpers/ProductsBanner';
 import ProductsPagination from './ProductsPagination';
 import { Link } from 'react-router-dom';
@@ -68,7 +68,7 @@ const Products = () => {
   }, [products]);
 
   return (
-    <div className="container mx-auto py-4 relative w-[100vw]">
+    <div className="container mx-auto py-20 relative w-[100vw]">
       <div className="w-full flex flex-col gap-3 px-7">
         <p className="text-5xl font-bold ">
           <span>Products</span>
