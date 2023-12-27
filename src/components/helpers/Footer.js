@@ -5,8 +5,8 @@ import { FaFacebookF, FaDiscord, FaGithub } from "react-icons/fa";
 
 const Footer = () => {
   return (
-      <div class="bg-[#F5F5F3]  w-full">
-          <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+      <div class="bg-[#F5F5F3]  w-full ">
+          <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-6">
               <div class="md:flex md:justify-between">
                 <div class="mb-6 mx-auto md:mb-0">
                     <Link to="/" class="flex items-center">

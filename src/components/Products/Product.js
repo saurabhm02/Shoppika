@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FiHeart } from "react-icons/fi";
 import { wishlistContext } from '../utils/WishlistContext';
 
+
 const truncateTitle = (title, maxLength) => {
   if (title.length > maxLength) {
     return title.slice(0, maxLength - 2) + '..';
@@ -22,9 +23,7 @@ const Product = ({ product }) => {
   const [isHovered, setHovered] = useState(false);
 
   return (
-    <div
-      className="lg:w-[240px] group hover:shadow-xl transition-all duration-2000 ease-in-out relative group sm:max-w-[320px]"
-    >
+    <div className="lg:w-[240px] md:w-[240px] group hover:shadow-xl transition-all duration-2000 ease-in-out relative group sm:w-[320px]">
       <div className="img relative"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}

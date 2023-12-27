@@ -90,7 +90,7 @@ const SpecialOffers = () => {
     };
 
     return (
-        <div className="w-full px-10 pb-20">
+        <div className="w-full px-4 pb-20">
           <motion.div
                 initial={{ y: -40, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
@@ -106,7 +106,9 @@ const SpecialOffers = () => {
                             initial={{ x: 50, opacity: 0 }}
                             whileInView={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.7 }} 
-                             key={product.id}>
+                            key={product.id}
+                            className="px-4"      
+                        >
                         <Product product={product} />
                         </motion.div>
                     ))}

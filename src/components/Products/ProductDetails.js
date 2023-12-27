@@ -6,7 +6,7 @@ import { sidebarContext } from '../utils/SidebarContext';
 import Sidebar from '../Pages/Sidebar';
 import { MyContext } from '../../App';
 import { BsBoxArrowLeft } from "react-icons/bs";
-import { HiOutlineChevronRight } from "react-icons/hi"
+import { HiOutlineChevronRight } from "react-icons/hi";
 
 
 
@@ -57,7 +57,7 @@ const ProductDetails = () => {
                         {title}
                     </span>
                 </p>
-             </div>
+            </div>
             <div className="flex flex-col lg:flex-row items-center sm:justify-center">
                 <div className="big-img flex flex-1 justify-center items-center mb-8 lg:mb-0">
                     <img src={activeImg} alt="product image" width={400}  className="lg:max-h-80 sm:max-h-60 object-cover aspect-square rounded-xl md:max-w-full" />

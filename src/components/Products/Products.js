@@ -1,52 +1,118 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Product from './Product';
 import { MyContext } from '../../App';
+import ProductSideBar from '../helpers/ProductSideBar';
+import ProductsBanner from '../helpers/ProductsBanner';
+import ProductsPagination from './ProductsPagination';
+import { Link } from 'react-router-dom';
+import { HiOutlineChevronRight } from 'react-icons/hi';
+
+
 
 const Products = () => {
-  const { products } = useContext(MyContext);
+  const { products, setProducts } = useContext(MyContext);
   const [items, setItems] = useState(products);
-  // console.log(products)
+  const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [sortBy, setSortBy] = useState("Default");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedPrices, setSelectedPrices] = useState([]);
 
-  const filterItem = (item)=>{
+  const itemPerPagefromContainer = (itemsPerPage) => {
+    setItemsPerPage(itemsPerPage);
+  };
 
-    const updateProducts = products.filter((curElem)=>{
+  const handleSortChange = (e) => {
+    const selectedSortOption = e.target.value;
+    setSortBy(selectedSortOption);
+    let sortedProducts = [...products];
+    if (selectedSortOption === "Default") {
+      sortedProducts = defaultSort(products);
+    } else if (selectedSortOption === "Better Discount") {
+      sortedProducts.sort((a, b) => b.discountPercentage - a.discountPercentage);
+    } else if (selectedSortOption === "Low to High") {
+      sortedProducts.sort((a, b) => a.price - b.price);
+    } else if (selectedSortOption === "High to Low") {
+      sortedProducts.sort((a, b) => b.price - a.price);
+    }
+
+    setProducts(sortedProducts);
+  };
+
+  const defaultSort = (products) => {
+    return [...products].sort((a, b) => a.id - b.id);
+  };
+
+  const filterPrice = (item) => {
+    const [min, max] = item.split(" - ");
+    const updateProducts = products.filter((curElem) => {
+      const price = curElem.price;
+      return price >= parseInt(min) && price <= parseInt(max);
+    });
+    setItems(updateProducts);
+    setSelectedPrices([...selectedPrices, item]); // Use spread operator to keep previous prices
+    setSelectedCategories([]);
+    setSelectedBrands([]);
+  };
+
+  const filterItem = (item) => {
+    const updateProducts = products.filter((curElem) => {
       return curElem.category === item;
     });
     setItems(updateProducts);
-  }
+    setSelectedCategories([item]);
+    setSelectedBrands([]); // Reset selected brands when category changes
+  };
 
- 
-  if (!products || products.length === 0) {
-    return <p>Loading...</p>; 
-  }
+  useEffect(() => {
+    setItems(products);
+  }, [products]);
 
   return (
-    <div className="container mx-auto py-20">
-      <div className="sec-header flex gap-4 items-center">
-        <h2 className="text-3xl font-semibold">Explore Our Products</h2>
-        <div>
-          <ul className="flex gap-2 cursor-pointer">
-            <li className="py-1 px-2 bg-gray-100 rounded-md " onClick={() => setItems(products)}>All</li>
-            <li className="py-1 px-2 bg-gray-100 rounded-md " onClick={() => filterItem("smartphones")}>smartphones</li>
-            <li className="py-1 px-2 bg-gray-100 rounded-md " onClick={() => filterItem("Clothings")}>clothings</li>
-            <li className="py-1 px-2 bg-gray-100 rounded-md " onClick={() => filterItem("laptops")}>laptops</li>
-            <li className="py-1 px-2 bg-gray-100 rounded-md " onClick={() => filterItem("cap")}>cap</li>
-            <li className="py-1 px-2 bg-gray-100 rounded-md " onClick={() => filterItem("fragrances")}>fragrances</li>
-            <li className="py-1 px-2 bg-gray-100 rounded-md " onClick={() => filterItem("skincare")}>skincare</li>
-            <li className="py-1 px-2 bg-gray-100 rounded-md " onClick={() => filterItem("groceries")}>groceries</li>
-            <li className="py-1 px-2 bg-gray-100 rounded-md " onClick={() => filterItem("shoes")}>shoes</li>
-            <li className="py-1 px-2 bg-gray-100 rounded-md " onClick={() => filterItem("home-decoration")}>home-decoration</li>
-            <li className="py-1 px-2 bg-gray-100 rounded-md " onClick={() => filterItem("electronics")}>electronics</li>
-          </ul>
+    <div className="container mx-auto py-4 relative w-[100vw]">
+      <div className="w-full flex flex-col gap-3 px-7">
+        <p className="text-5xl font-bold ">
+          <span>Products</span>
+        </p>
+        <p className="text-lg font-normal text-lightText capitalize flex items-center ">
+          <span className="text-lightText hover:font-semibold">
+            <Link to="/">Home</Link>
+          </span>
+          <span className="px-1">
+            <HiOutlineChevronRight />
+          </span>
+          <span className="text-lightText hover:font-semibold">
+            <Link to="/products">Products</Link>
+          </span>
+        </p>
+      </div>
+      <div className="w-full h-full flex pb-20 gap-2">
+        <div className="w-[20%] lg:w-[20%] hidden lg:inline-flex h-full">
+          <ProductSideBar
+            setSelectedCategories={setSelectedCategories}
+            setSelectedBrands={setSelectedBrands}
+
+          />
+        </div>
+        <div className="w-full md:w-[100%] lg:w-[80%] h-full flex flex-col items-center gap-10">
+          <ProductsBanner
+            itemPerPagefromContainer={itemPerPagefromContainer}
+            handleSortChange={handleSortChange}
+            sortBy={sortBy}
+            selectedCategories={selectedCategories}
+            setSelectedCategories={setSelectedCategories}
+            filterItem={filterItem}
+            selectedBrands={selectedBrands}
+            setSelectedBrands={setSelectedBrands}
+          />
+          <ProductsPagination
+            itemsPerPage={itemsPerPage}
+            products={items}
+            setProducts={setItems}
+            selectedCategories={selectedCategories}
+            selectedBrands={selectedBrands}
+          />
         </div>
       </div>
-      <div className="grid items-end place-items-center sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 max-w-full mx-auto space-y-10 space-x-1 min-h-[80vh] py-2 px-4">
-        {items.map((product) => (
-          <Product key={product.id} product={product} />
-        ))}
-      </div>
-      
-
     </div>
   );
 };
