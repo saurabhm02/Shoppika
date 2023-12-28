@@ -13,7 +13,7 @@ const SpecialOffers = () => {
         const { onClick } = props;
         return (
           <div
-            className="w-14 h-14 rounded-full text-white bg-black bg-opacity-40 hover:bg-opacity-100 duration-300 cursor-pointer flex justify-center items-center absolute z-10 top-[35%] left-2"
+            className="w-10 h-10 rounded-full text-white bg-black bg-opacity-40 hover:bg-opacity-100 duration-300 cursor-pointer flex justify-center items-center absolute z-10 top-[35%] left-2"
             onClick={onClick}
           >
             <span>
@@ -27,7 +27,7 @@ const SpecialOffers = () => {
         const { onClick } = props;
         return (
           <div
-            className="w-14 h-14 rounded-full text-white bg-black bg-opacity-40 hover:bg-opacity-100 duration-300 cursor-pointer flex justify-center items-center z-10 absolute top-[35%] right-2"
+            className="w-10 h-10 rounded-full text-white bg-black bg-opacity-40 hover:bg-opacity-100 duration-300 cursor-pointer flex justify-center items-center z-10 absolute top-[35%] right-2"
             onClick={onClick}
           >
             <span className="text-xl">
@@ -73,7 +73,7 @@ const SpecialOffers = () => {
           {
             breakpoint: 769,
             settings: {
-              slidesToShow: 2,
+              slidesToShow: 3,
               slidesToScroll: 2,
               infinite: true,
             },
@@ -81,7 +81,7 @@ const SpecialOffers = () => {
           {
             breakpoint: 480,
             settings: {
-              slidesToShow: 1,
+              slidesToShow: 2,
               slidesToScroll: 1,
               infinite: true,
             },
@@ -90,7 +90,7 @@ const SpecialOffers = () => {
     };
 
     return (
-        <div className="w-full px-4 pb-20">
+        <div className="w-full px-3 pb-20">
           <motion.div
                 initial={{ y: -40, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
@@ -107,7 +107,7 @@ const SpecialOffers = () => {
                             whileInView={{ x: 0, opacity: 1 }}
                             transition={{ duration: 0.7 }} 
                             key={product.id}
-                            className="px-4"      
+                            className="px-3"      
                         >
                         <Product product={product} />
                         </motion.div>

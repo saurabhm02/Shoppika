@@ -32,9 +32,9 @@ const ProductsBanner = ({
           className="flex h-14 cursor-pointer items-center gap-2 text-xl "
         >
           {sortOrder === "descending" ? (
-            <HiOutlineSortAscending className="w-10 h-8" />
-          ) : (
             <HiOutlineSortDescending className="w-10 h-8" />
+          ) : (
+            <HiOutlineSortAscending className="w-10 h-8" />
           )}
           <p className="text-[14px] sm:hidden inline-block font-normal">Shop by Category</p>
           {show && (

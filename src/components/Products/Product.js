@@ -46,7 +46,7 @@ const Product = ({ product }) => {
 
 
   return (
-    <div className="lg:w-[240px] md:w-[205px] group hover:shadow-xl transition-all duration-2000 ease-in-out relative group sm:w-[160px]">
+    <div className="lg:w-[240px] md:w-[205px] group hover:shadow-xl transition-all duration-2000 ease-in-out relative group sm:w-[150px]">
       <ToastContainer/>
       <div className="img relative"
         onMouseEnter={() => setHovered(true)}

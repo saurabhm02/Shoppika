@@ -12,7 +12,7 @@ const NewArrivals = () => {
     const { onClick } = props;
     return (
       <div
-        className="w-14 h-14 rounded-full text-white bg-black bg-opacity-40 hover:bg-opacity-100 duration-300 cursor-pointer flex justify-center items-center absolute z-10 top-[35%] left-[-10px]"
+        className="w-10 h-10 rounded-full text-white bg-black bg-opacity-40 hover:bg-opacity-100 duration-300 cursor-pointer flex justify-center items-center absolute z-10 top-[35%] left-[-10px]"
         onClick={onClick}
       >
         <span>
@@ -26,7 +26,7 @@ const NewArrivals = () => {
     const { onClick } = props;
     return (
       <div
-        className="w-14 h-14 rounded-full text-white bg-black bg-opacity-40 hover:bg-opacity-100 duration-300 cursor-pointer flex justify-center items-center z-10 absolute top-[35%] right-[-10px]"
+        className="w-10 h-10 rounded-full text-white bg-black bg-opacity-40 hover:bg-opacity-100 duration-300 cursor-pointer flex justify-center items-center z-10 absolute top-[35%] right-[-10px]"
         onClick={onClick}
       >
         <span className="text-xl">
@@ -72,15 +72,15 @@ const NewArrivals = () => {
       {
         breakpoint: 769,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: 3,
+          slidesToScroll: 3,
           infinite: true,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
           infinite: true,
         },
@@ -89,7 +89,7 @@ const NewArrivals = () => {
   };
 
   return (
-    <div className="w-full pb-14 px-4 overflow-x-hidden">
+    <div className="w-full pb-1 px-3 overflow-x-hidden">
       <motion.div
         initial={{ y: 40, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -104,7 +104,7 @@ const NewArrivals = () => {
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.7 }} 
             key={product.id}
-            className="px-4"
+            className="px-3"
           >
             <Product product={product} />
           </motion.div>
