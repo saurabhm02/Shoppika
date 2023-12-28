@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { HiOutlineChevronRight } from 'react-icons/hi';
 
 
-
 const Products = () => {
   const { products, setProducts } = useContext(MyContext);
   const [items, setItems] = useState(products);
@@ -49,7 +48,7 @@ const Products = () => {
       return price >= parseInt(min) && price <= parseInt(max);
     });
     setItems(updateProducts);
-    setSelectedPrices([...selectedPrices, item]); // Use spread operator to keep previous prices
+    setSelectedPrices([...selectedPrices, item]);
     setSelectedCategories([]);
     setSelectedBrands([]);
   };
@@ -60,7 +59,7 @@ const Products = () => {
     });
     setItems(updateProducts);
     setSelectedCategories([item]);
-    setSelectedBrands([]); // Reset selected brands when category changes
+    setSelectedBrands([]);
   };
 
   useEffect(() => {
@@ -68,7 +67,7 @@ const Products = () => {
   }, [products]);
 
   return (
-    <div className="container mx-auto py-20 relative w-[100vw]">
+    <div className="container mx-auto py-4 relative w-[100vw]">
       <div className="w-full flex flex-col gap-3 px-7">
         <p className="text-5xl font-bold ">
           <span>Products</span>
@@ -116,5 +115,4 @@ const Products = () => {
     </div>
   );
 };
-
 export default Products;

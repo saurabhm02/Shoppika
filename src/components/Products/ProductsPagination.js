@@ -30,32 +30,30 @@ const ProductsPagination = ({ itemsPerPage, products, setProducts, selectedCateg
   }, [selectedCategories, selectedBrands]);
 
   return (
-    <div className="relative">
+    <div>
       <motion.div
         initial={{ y: 50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7 }}
-        className="grid items-end place-items-center sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 max-w-full mx-auto space-y-10 space-x-1 min-h-[80vh] lg:py-4 sm:py-20 md:py-14 pr-5"
+        className="grid items-end place-items-center  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-full mx-auto space-y-12 space-x-1 min-h-[80vh] lg:py-4 sm:py-10 md:py-4 pr-5"
       >
         <ProductItem currentItems={currentItems} />
       </motion.div>
-      <div className="flex flex-row lg:justify-between items-center sm:justify-center px-2">
-        <ReactPaginate
-          nextLabel=""
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={2}
-          pageCount={pageCount}
-          previousLabel=""
-          pageLinkClassName="w-9 h-9 border-[1px] border-lightColor hover:border-gray-500 duration-300 flex justify-center items-center"
-          pageClassName="mr-6"
-          containerClassName="flex text-base font-semibold font-titleFont py-8 "
-          activeClassName="bg-black text-white"
-        />
-        <p className="text-base lg:inline-block font-normal sm:hidden px-16">
-          Products from {itemStart} to {endOffset} of {filteredProducts.length}
-        </p>
-      </div>
+      <ReactPaginate
+        nextLabel=""
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={3}
+        marginPagesDisplayed={2}
+        pageCount={pageCount}
+        previousLabel=""
+        pageLinkClassName="w-9 h-9 border-[1px] border-lightColor hover:border-gray-500 duration-300 flex justify-center items-center"
+        pageClassName="mr-6"
+        containerClassName="flex text-base font-semibold font-titleFont py-8 lg:px-10"
+        activeClassName="bg-black text-white"
+      />
+      <p className="text-base font-normal text-lightText lg:px-10 inline-block sm:hidden ">
+        Products from {itemStart} to {endOffset} of {filteredProducts.length}
+      </p>
     </div>
   );
 };
