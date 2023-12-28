@@ -62,8 +62,7 @@ const ProductsBanner = ({
           )}
         </div>
       </div>
-
-
+      
       <div className="flex items-center gap-2 text-base text-[#767676] relative sm:pr-6 cursor-pointer">
         <label className="block">Sort by:</label>
         <select
@@ -82,8 +81,6 @@ const ProductsBanner = ({
         </span>
       </div>
       
-     
-      
       <div className="lg:inline-flex items-center gap-2 text-[#767676] relative hidden cursor-pointer">
         <label className="block">Show:</label>
         <select
@@ -100,6 +97,7 @@ const ProductsBanner = ({
           <GoTriangleDown />
         </span>
       </div>
+
     </div>
   );
 };

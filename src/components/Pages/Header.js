@@ -12,19 +12,19 @@ const Header = () => {
   const { itemAmount } = useContext(cartContext);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md h-16 px-8">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md h-16 lg:px-8">
       <div className="flex justify-between w-full h-full items-center">
-        <Link to="/" className="logo flex px-4 text-lg gap-2 items-center">
+        <Link to="/" className="logo flex lg:px-4 sm:px-4 text-lg gap-2 items-center">
             <div className="logo-icon text-2xl">
-            <FiShoppingCart />
+             <FiShoppingCart />
             </div>
             <logo-name>
-            <span className="font-bold flex items-center relative">
-                <span className="text-[20px]">
-                    <FaS />
-                </span>
-                <span className="absolute left-[17px]">hoppika</span>
-            </span>
+              <span className="font-bold flex items-center relative">
+                  <span className="text-[20px]">
+                      <FaS />
+                  </span>
+                  <span className="absolute left-[17px]">hoppika</span>
+              </span>
             </logo-name>
         </Link>
 
@@ -34,10 +34,11 @@ const Header = () => {
               setIsOpen(!isOpen);
               console.log('Clicked');
             }}
-            className="wishlist text-2xl pr-3"
+            className="wishlist text-2xl lg:pr-3 sm:pr-0"
           >
             <FiHeart className="cursor-pointer" />
           </div>
+
           <div
             onClick={() => {
               setIsOpen(!isOpen);
@@ -50,10 +51,12 @@ const Header = () => {
               {itemAmount}
             </div>
           </div>
+
           <div className="login-btn">
-            <button className="pl-7 pr-3 cursor-pointer">Login</button>
+            <button className="lg:pl-7 sm:pl-5 pr-3 cursor-pointer">Login</button>
           </div>
         </div>
+
       </div>
     </header>
   );

@@ -9,7 +9,7 @@ const ProductOfYear = () => {
     initial={{ y: -50, opacity: 0 }}
     whileInView={{ y: 0, opacity: 1 }}
     transition={{ duration: 0.7 }}  
-    className="w-full lg:h-80 sm:h-[22rem] mb-8 bg-[#f3f3f3] md:bg-transparent relative font-titleFont">
+    className="w-full lg:h-80 sm:h-[22rem] mb-8 mt-6 bg-[#f3f3f3] md:bg-transparent relative font-titleFont">
         <img
           className="w-full h-full object-cover hidden md:inline-block"
           src={productOfYear}

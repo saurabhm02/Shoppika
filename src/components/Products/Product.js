@@ -20,7 +20,7 @@ const truncateTitle = (title, maxLength) => {
 const Product = ({ product }) => {
   // const { addToWishlist } = useContext(wishlistContext);
   const actualPrice = (product.price * 100) / (100 - product.discountPercentage);
-  const truncatedTitle = truncateTitle(product.title, 20);
+  const truncatedTitle = truncateTitle(product.title, 18);
 
   // deconstruct the product
   const { id, title, thumbnail, rating, ratingsCount, brand, price, discountPercentage } = product;
@@ -46,7 +46,7 @@ const Product = ({ product }) => {
 
 
   return (
-    <div className="lg:w-[240px] md:w-[205px] group hover:shadow-xl transition-all duration-2000 ease-in-out relative group sm:w-[150px]">
+    <div className="lg:w-[240px] md:w-[205px] group hover:shadow-xl transition-all duration-2000 ease-in-out relative group sm:w-[160px]">
       <ToastContainer/>
       <div className="img relative"
         onMouseEnter={() => setHovered(true)}
