@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { LiaCartPlusSolid } from "react-icons/lia";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch } from 'react-redux';
-import { addToWishlist, removeFromWishlist } from '../redux/wishlistSlice';
+import { removeFromWishlist } from '../redux/wishlistSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa6';
-import { FiHeart } from "react-icons/fi";
 import { motion } from 'framer-motion';
 import { addToCart } from '../redux/cartSlice';
 
@@ -14,8 +13,14 @@ const truncateTitle = (title, maxLength) => {
     if (typeof title !== 'string' || title.length <= maxLength) {
         return title;
     }
-
     return title.slice(0, maxLength - 2) + '..';
+};
+
+const truncateBrand = (brand, maxLength) => {
+  if (typeof brand !== 'string' || brand.length <= maxLength) {
+      return brand;
+  }
+  return brand.slice(0, maxLength - 2) + '..';
 };
 
 const WishListItem = ({item}) => {
@@ -23,9 +28,10 @@ const WishListItem = ({item}) => {
 
     const actualPrice = (item.price * 100) / (100 - item.discountPercentage);
     const truncatedTitle = truncateTitle(item.title, 18);
+    const truncatedBrand = truncateBrand(item.brand, 15);
   
     // deconstruct the product
-    const { id, title, thumbnail, rating, ratingsCount, brand, price, discountPercentage } = item;
+    const { id, title, thumbnail, rating, ratingsCount, price, discountPercentage } = item;
   
     const [isHovered, setHovered] = useState(false);
     const isSmallScreen = window.innerWidth <= 700;
@@ -47,7 +53,7 @@ const WishListItem = ({item}) => {
       
         dispatch(addToCart({ ...item, oneQuantityPrice: price }));
       
-        toast.success(`Success. ${title} is in the cart!`, {
+        toast.success(`${title} is moved to cart!`, {
           position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -59,24 +65,19 @@ const WishListItem = ({item}) => {
         });
       };
 
-    // const addProductHandler = () => {
-    //     dispatch(removeFromWishlist({ id: item.id }));
-    //     console.log("Before dispatching addToCart");
-    //     dispatch(addToCart({ ...item, oneQuantityPrice: price }));
-    //     console.log("After dispatching addToCart");
-      
-    //     toast.success(`Success. ${title} is in the cart!`, {
-    //       position: "bottom-right",
-    //       autoClose: 5000,
-    //       hideProgressBar: false,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //       draggable: true,
-    //       progress: undefined,
-    //       theme: "dark",
-    //     });
-    // };
-  
+      const removeHandler = () =>{
+        dispatch(removeFromWishlist({ id: item.id }))
+        toast.error(`${title} is removed from wishlist!`, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
   
     return (
       <div className="lg:w-[240px] md:w-[205px] group hover:shadow-xl transition-all duration-2000 ease-in-out relative group sm:w-[160px]">
@@ -85,7 +86,7 @@ const WishListItem = ({item}) => {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          <Link to={`/item/${title}`}>
+          <Link to={`/product/${title}`}>
             <motion.img
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -98,7 +99,7 @@ const WishListItem = ({item}) => {
             {isHovered && (
               <img
                 src={item.images[1]} 
-                alt="second image on hover"
+                alt="secondImage on hover"
                 style={{ height: '200px', position: 'absolute', top: 0, left: 0 }}
                 className="cursor-pointer object-cover w-full"
               />
@@ -108,9 +109,7 @@ const WishListItem = ({item}) => {
           <div className="p-1 absolute bottom-2 left-2 bg-white bg-opacity-70 text-xs font-semibold rounded z-10 flex items-center">
             {rating} <span className="pl-1 pr-1 text-sm text-green-600"><FaStar /></span> | {ratingsCount}
           </div>
-          <div onClick={() =>
-                dispatch(removeFromWishlist({ id: item.id }))
-            }>
+          <div onClick={removeHandler}>
             <div className="absolute top-3 right-3 p-1 text-lg bg-white bg-opacity-70 rounded-full cursor-pointer hover:text-xl block">
               <RxCross2 /> 
             </div>
@@ -126,7 +125,7 @@ const WishListItem = ({item}) => {
           <div className="det relative justify-end overflow-hidden">
   
             <div className={` prod-det ${isSmallScreen ? " " : "transform group-hover:translate-y-24 sm:transition-transform duration-500"} `}>
-              <p className="font-semibold text-lg mb-1">{brand}</p>
+              <p className="font-semibold text-lg mb-1">{truncatedBrand}</p>
               <p className="text-sm mb-1 text-slate-700 cursor-pointer">{truncatedTitle}</p>
             </div>
   

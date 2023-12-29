@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaStar } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
@@ -15,15 +15,22 @@ const truncateTitle = (title, maxLength) => {
   }
   return title;
 };
+const truncateBrand = (Brand, maxLength) => {
+  if (Brand.length > maxLength) {
+    return Brand.slice(0, maxLength - 2) + '..';
+  }
+  return Brand;
+};
 
 
 const Product = ({ product }) => {
   // const { addToWishlist } = useContext(wishlistContext);
   const actualPrice = (product.price * 100) / (100 - product.discountPercentage);
   const truncatedTitle = truncateTitle(product.title, 18);
+  const truncatedBrand = truncateBrand(product.brand, 15);
 
   // deconstruct the product
-  const { id, title, thumbnail, rating, ratingsCount, brand, price, discountPercentage } = product;
+  const { title, thumbnail, rating, ratingsCount, price, discountPercentage } = product;
 
   const [isHovered, setHovered] = useState(false);
   const isSmallScreen = window.innerWidth <= 700;
@@ -78,7 +85,7 @@ const Product = ({ product }) => {
           {isHovered && (
             <img
               src={product.images[1]} 
-              alt="second image on hover"
+              alt="secondImage on hover"
               style={{ height: '200px', position: 'absolute', top: 0, left: 0 }}
               className="cursor-pointer object-cover w-full"
             />
@@ -99,7 +106,7 @@ const Product = ({ product }) => {
         <div className="det relative justify-end overflow-hidden">
 
           <div className={` prod-det ${isSmallScreen ? " " : "transform group-hover:translate-y-24 sm:transition-transform duration-500"} `}>
-            <p className="font-semibold text-lg mb-1">{brand}</p>
+            <p className="font-semibold text-lg mb-1">{truncatedBrand}</p>
             <p className="text-sm mb-1 text-slate-700 cursor-pointer">{truncatedTitle}</p>
           </div>
 

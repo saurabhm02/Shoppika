@@ -1,17 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import emptyBanner from "../../assets/banners/emptyBanner.jpg";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem';
-import { loadCartItems, removeFromCart, updateCart } from '../redux/cartSlice';
+import { loadCartItems, removeFromCart } from '../redux/cartSlice';
 
 
 const CartPage = () => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
   console.log("product cartpage", cartItems);
-  const [totalAmount, setTotalAmount] = useState(" ");
+  // const [totalAmount, setTotalAmount] = useState(" ");
 
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const CartPage = () => {
 
 
   return(
-     <div className="w-full md:py-20">
+     <div className="py-20 w-full md:py-20">
         <div>
           {cartItems.length > 0 ? (
             <>
@@ -53,7 +53,7 @@ const CartPage = () => {
                   </div>
               </div>
                
-              <div className="flex flex-col lg:flex-row gap-12 py-10 px-14">
+              <div className="flex flex-col lg:flex-row gap-12 py-10 lg:px-14">
                 <div className="flex-[2]">
                   <div className="text-xl font-bold">
                           Cart Items
@@ -90,13 +90,15 @@ const CartPage = () => {
                             <div className="w-full flex flex-col pl-5">
                               <div className="flex flex-col md:flex-row justify-between">
                                       
-                                  <div className="text-sm font-semibold text-black/[0.8]">
-                                      {item.title}
-                                  </div>
+                                  <div className="flex flex-col">
+                                    <div className="text-sm font-semibold text-black/[0.8]">
+                                        {item.title}
+                                    </div>
 
-                                      
-                                  <div className="text-sm  font-medium text-black/[0.5] block sm:hidden md:hidden">
-                                      {item.brand}
+                                        
+                                    <div className="text-sm md:text-md font-medium text-black/[0.5] lg:inline-block md:hidden sm:hidden ">
+                                        {item.brand}
+                                    </div>
                                   </div>
 
                                     
@@ -159,6 +161,7 @@ const CartPage = () => {
                   src={emptyBanner}
                   width={300}
                   height={300}
+                  alt="BannerImage for empty cart"
                   className="w-[300px] md:w-[400px]"
               />
               <span className="text-xl font-bold">

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { MyContext } from '../../App';
 import { HiOutlineChevronRight } from "react-icons/hi";
 import { useDispatch } from 'react-redux';
@@ -45,9 +45,9 @@ const addProductHandler = () => {
     }
 
     localStorage.setItem('cartItems', JSON.stringify(savedCartItems));
-  
-    dispatch(addToCart({ ...product, oneQuantityPrice: price }));
-  
+
+    dispatch(addToCart({ id: id, title: title, price: price }));
+
     toast.success(`Success. ${title} is in the cart!`, {
       position: "bottom-right",
       autoClose: 5000,
@@ -116,7 +116,7 @@ const addProductHandler = () => {
             </div>
             <div className="flex flex-col lg:flex-row items-center sm:justify-center ">
                 <div className="big-img flex flex-1 justify-center items-center mb-8 lg:mb-0">
-                    <img src={activeImg} alt="product image" width={400}  className="lg:h-80 sm:h-60 object-cover aspect-square rounded-xl lg:max-w-[30rem] sm:max-w-[20rem]" />
+                    <img src={activeImg} alt="productImage" width={400}  className="lg:h-80 sm:h-60 object-cover aspect-square rounded-xl lg:max-w-[30rem] sm:max-w-[20rem]" />
                 </div>
 
                 <div className="flex-1 text-center lg:text-left mr-2 ">
@@ -131,7 +131,7 @@ const addProductHandler = () => {
                     <p></p>
                     <div className="img-carousel flex flex-row gap-3 lg:justify-between sm:justify-around h-24 lg:pr-42 sm:pr-0 sm:pl-2 mb-4">
                         {product.images.map((img, i) => (
-                            <img src={img} alt="product image" key={i} 
+                            <img src={img} alt="productImage" key={i} 
                                 className="lg:w-28 lg:h-24 sm:max-w-[87px] sm:h-[90px] rounded-md cursor-pointer"
                                 onClick={() => setActiveImg(img)}    
                             />

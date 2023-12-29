@@ -7,28 +7,46 @@ export const cartSlice = createSlice({
     },
     reducers: {
         addToCart: (state, action) => {
-            const item = state.cartItems.find(
-                (p) => p.id === action.payload.id
-            );
+            const item = state.cartItems.find((p) => p.id === action.payload.id);
             if (item) {
                 item.quantity++;
-                item.price = item.oneQuantityPrice * item.quantity;
             } else {
-                state.cartItems.push({ ...action.payload, quantity: 1 });
+                const newCartItem = {
+                    ...action.payload,
+                    quantity: 1,
+                    oneQuantityPrice: parseFloat(action.payload.price) || 0,
+                };
+        
+                state.cartItems.push(newCartItem);
             }
         },
+        
         updateCart: (state, action) => {
-            state.cartItems = state.cartItems.map((p) => {
-                if (p.id === action.payload.id) {
+            state.cartItems = state.cartItems.map((item) => {
+                if (item.id === action.payload.id) {
                     if (action.payload.key === "quantity") {
-                        p.price =
-                            p.oneQuantityPrice * action.payload.val;
+                        const newQuantity = parseFloat(action.payload.val) || 0;
+                        const oneQuantityPrice = parseFloat(item.price) / item.quantity || 0;
+        
+                        item.quantity = newQuantity;
+                        item.price = oneQuantityPrice * newQuantity;
+                        item.oneQuantityPrice = oneQuantityPrice;
+        
+                        // console.log("New Quantity:", newQuantity);
+                        // console.log("One Quantity Price:", oneQuantityPrice);
+                        // console.log("Old Price:", item.price);
+                        // console.log("Updated Price:", item.price);
+                    } else {
+                        return { ...item, [action.payload.key]: action.payload.val };
                     }
-                    return { ...p, [action.payload.key]: action.payload.val };
                 }
-                return p;
+                return item;
             });
         },
+        
+        
+        
+
         removeFromCart: (state, action) => {
             state.cartItems = state.cartItems.filter(
               (p) => p.id !== action.payload.id

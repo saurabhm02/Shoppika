@@ -1,7 +1,10 @@
 import React from 'react';
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { FiHeart } from "react-icons/fi";
 import { addToCart, removeFromCart, updateCart } from '../redux/cartSlice';
 import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import { addToWishlist } from '../redux/wishlistSlice';
 
 const CartItem = ({item}) => {
     const dispatch = useDispatch();
@@ -13,16 +16,62 @@ const CartItem = ({item}) => {
             id: item.id,
         };
         dispatch(updateCart(payload));
+    };
+
+    const addWishlistHandler = () => {
+        dispatch(removeFromCart({ id: item.id }));
+        const savedWishList = JSON.parse(localStorage.getItem('wishlistItems')) || [];
+    
+        // Use a different variable (wishListItem) for the existing item check
+        const existingItem = savedWishList.find((wishListItem) => wishListItem.id === item.id);
+    
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            savedWishList.push({ ...item, quantity: 1 });
+        }
+    
+        localStorage.setItem('wishlistItems', JSON.stringify(savedWishList));
+    
+        dispatch(addToWishlist({ ...item, oneQuantityPrice: item.price }));
+    
+        toast.success(`${item.title} is moved to wishlist!`, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    };
+    
+
+    const removeHandler = ()=>{
+        dispatch(removeFromCart({ id: item.id }));
+        toast.error(`${item.title} is removed from cart!`, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
     }
+
   return (
-    <div className="flex py-5 gap-3 md:gap-5 border-b">
+    <div className="flex py-5 gap-3 md:gap-5 border-b pr-3">
+    <ToastContainer/>
         
-        <div className="shrink-0 aspect-square w-[50px] md:w-[120px]">
+        <div className="shrink-0 aspect-square w-[50px] sm:w-[70px] md:w-[120px]">
             <img
                 src={item?.thumbnail}
                 alt={item?.title}
                 width={120}
-                className="object-cover h-24 rounded-md"
+                className="object-cover lg:h-24  sm:h-20 rounded-md"
             />
         </div>
 
@@ -40,7 +89,7 @@ const CartItem = ({item}) => {
 
                   
                 <div className="text-sm md:text-md font-bold text-black/[0.5] mt-2">
-                    MRP : &#8377;{item?.price}
+                MRP : &#8377;{item?.price}
                 </div>
             </div>
 
@@ -58,30 +107,36 @@ const CartItem = ({item}) => {
                             <select
                                 className="hover:text-black"
                                 onChange={(e) => updateCartItem(e, "quantity")}
+                                value={item.quantity}
                             >
-                                {Array.from(
-                                    { length: 10 },
-                                    (_, i) => i + 1
-                                ).map((q, i) => {
-                                    return (
-                                        <option
-                                            key={i}
-                                            value={q}
-                                            selected={item.quantity === q}
-                                        >
-                                            {q}
-                                        </option>
-                                    );
-                                })}
+                                {Array.from({ length: 10 }, (_, i) => i + 1).map((q, i) => (
+                                    <option key={i} value={q}>
+                                        {q}
+                                    </option>
+                                ))}
                             </select>
+
                         </div>
                     </div>
-                    <RiDeleteBin6Line
-                        onClick={() =>
-                            dispatch(removeFromCart({ id: item.id }))
-                        }
+
+                    <div className="flex gap-5 items-center">
+                        <div className="flex items-center gap-1">
+                        
+                            <div className="flex items-center gap-1">
+                                <div
+                                    onClick={addWishlistHandler}
+                                    className="font-semibold flex items-center gap-1 cursor-pointer">
+                                   Move to wishlist 
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <RiDeleteBin6Line
+                            onClick={removeHandler}
                         className="cursor-pointer text-black/[0.5] hover:text-black text-[16px] md:text-[20px]"
-                    />
+                        />
+                    </div>
                 </div>
             </div>
         </div>
