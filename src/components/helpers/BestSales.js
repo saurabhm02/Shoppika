@@ -5,7 +5,7 @@ import { MyContext } from '../../App';
 import Product from '../Products/Product';
 import { motion } from 'framer-motion';
 
-const NewArrivals = () => {
+const BestSales = () => {
   const { products } = useContext(MyContext);
 
   const PrevArrow = (props) => {
@@ -95,23 +95,23 @@ const NewArrivals = () => {
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6 }} 
         className="text-4xl font-semibold pb-6"
-      > New Arrivals</motion.div>
+      > Best Sales</motion.div>
 
       <Slider {...settings}>
-        {products.slice(0, 10).map((product) => (
-          <motion.div
-            initial={{ x: -50, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.7 }} 
+        {products.slice(0, 10)
+          .filter((product) => product.ratingsCount >= 600)
+          .map((product) => (
+          <div
+            
             key={product.id}
             className="px-4"
           >
             <Product product={product} />
-          </motion.div>
+          </div>
         ))}
       </Slider>
     </div>
   );
 };
 
-export default NewArrivals;
+export default BestSales;

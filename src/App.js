@@ -6,6 +6,8 @@ import Products from "./components/Products/Products";
 import "slick-carousel/slick/slick.css";
 import ProductDetails from "./components/Products/ProductDetails";
 import Footer from "./components/helpers/Footer";
+import CartPage from "./components/cart/CartPage";
+import WishListPage from "./components/wishList/WishListPage";
 
 export const MyContext = createContext();
 
@@ -19,6 +21,8 @@ const Layout = () => {
         <Route path="/" element={<Body />} />
         <Route path="/products" element={<Products />} />
         <Route path="/product/:title" element={<ProductDetails />} />
+        <Route path="/cart" element={<CartPage/>}/>
+        <Route path="/wishlist" element={<WishListPage/>} /> 
       </Routes>
       <Footer/>
     </div>

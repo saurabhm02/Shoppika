@@ -4,7 +4,7 @@ import wishlistSlice from "./wishlistSlice";
 
 export const store = configureStore({
     reducer: {
-        cart: cartSlice.reducer,
-        wishlist: wishlistSlice.reducer,
+        cart: cartSlice,
+        wishlist: wishlistSlice,
     }
 })

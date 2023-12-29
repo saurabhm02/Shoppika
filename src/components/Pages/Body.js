@@ -4,7 +4,7 @@ import { MyContext } from '../../App';
 import { FiSearch } from 'react-icons/fi';
 import Banner from '../helpers/Banner';
 import Sale from '../helpers/Sale';
-import NewArrivals from '../helpers/NewArrivals';
+import NewArrivals from '../helpers/BestSales';
 import ProductOfYear from '../helpers/ProductOfYear';
 import SpecialOffers from '../helpers/SpecialOffers';
 
