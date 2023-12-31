@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import banner01 from "../../assets/banners/banner1.jpg";
 import banner02 from "../../assets/banners/banner2.jpg";
 import banner03 from "../../assets/banners/banner3.jpg";
@@ -47,41 +47,6 @@ const Banner = () => {
 
   return (
     <div className="relative">
-      {/* <Slider {...settings}>
-        <div className="w-full h-full relative">
-          <img
-            src={bannerone}
-            alt="bannerone"
-            className="w-full h-[80vh] relative"
-          />
-          <BannerText title="Outware Picks" />
-        </div>
-        <div className="w-full h-full relative">
-          <img
-            src={bannertwo}
-            alt="bannertwo"
-            className="w-full h-[80vh] object-cover relative"
-          />
-          <BannerText title="Seasonal Offers" />
-        </div>
-        <div className="w-full h-full relative">
-          <img
-            src={bannerthree}
-            alt="bannerthree"
-            className="w-full h-[80vh] object-cover relative"
-          />
-          <BannerText title="Best for men" />
-        </div>
-        <div className="w-full h-full  relative">
-          <img
-            src={bannerfour}
-            alt="bannerthree"
-            className="w-full h-[80vh] object-cover relative"
-          />
-          <BannerText title="Best for men" />
-        </div>
-      </Slider> */}
-
       <Slider {...settings}>
         <div className="w-full h-full relative">
           <img
@@ -108,7 +73,6 @@ const Banner = () => {
           <BannerText title="Style Hub" />
         </div>
         </Slider>
-      {/* <div className="absolute w-full h-44 bg-gradient-to-t from-gray-100 to-transparent bottom-0 left-0 z-10" /> */}
     </div>
 
   );

@@ -55,13 +55,13 @@ const WishListItem = ({item}) => {
       
         toast.success(`${title} is moved to cart!`, {
           position: "bottom-right",
-          autoClose: 5000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
+          theme: "light",
         });
       };
 
@@ -69,7 +69,7 @@ const WishListItem = ({item}) => {
         dispatch(removeFromWishlist({ id: item.id }))
         toast.error(`${title} is removed from wishlist!`, {
           position: "bottom-right",
-          autoClose: 5000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

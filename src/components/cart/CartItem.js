@@ -1,7 +1,7 @@
 import React from 'react';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiHeart } from "react-icons/fi";
-import { addToCart, removeFromCart, updateCart } from '../redux/cartSlice';
+import { removeFromCart, updateCart } from '../redux/cartSlice';
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { addToWishlist } from '../redux/wishlistSlice';
@@ -37,7 +37,7 @@ const CartItem = ({item}) => {
     
         toast.success(`${item.title} is moved to wishlist!`, {
             position: "bottom-right",
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -52,7 +52,7 @@ const CartItem = ({item}) => {
         dispatch(removeFromCart({ id: item.id }));
         toast.error(`${item.title} is removed from cart!`, {
             position: "bottom-right",
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -119,17 +119,13 @@ const CartItem = ({item}) => {
                         </div>
                     </div>
 
-                    <div className="flex gap-5 items-center">
-                        <div className="flex items-center gap-1">
-                        
-                            <div className="flex items-center gap-1">
-                                <div
-                                    onClick={addWishlistHandler}
-                                    className="font-semibold flex items-center gap-1 cursor-pointer">
-                                   Move to wishlist 
-                                </div>
-                            </div>
-
+                    <div className="flex gap-4 items-center">
+    
+                        <div
+                            onClick={addWishlistHandler}
+                            className="font-semibold flex items-center cursor-pointer"
+                        >
+                            <FiHeart size={19}/>
                         </div>
 
                         <RiDeleteBin6Line

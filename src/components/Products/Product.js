@@ -24,7 +24,6 @@ const truncateBrand = (Brand, maxLength) => {
 
 
 const Product = ({ product }) => {
-  // const { addToWishlist } = useContext(wishlistContext);
   const actualPrice = (product.price * 100) / (100 - product.discountPercentage);
   const truncatedTitle = truncateTitle(product.title, 18);
   const truncatedBrand = truncateBrand(product.brand, 15);
@@ -54,7 +53,7 @@ const Product = ({ product }) => {
   
     toast.success(`Success. ${title} is in the wishList!`, {
       position: "bottom-right",            
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
