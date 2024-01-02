@@ -43,7 +43,7 @@ const CartPage = () => {
 
 
   return(
-     <div className="py-10 w-full md:py-10">
+     <div className="lg:py-20 sm:py-20 w-full md:py-10">
       <div>
         {cartItems.length > 0 ? (
           <div className="flex flex-col lg:flex-row gap-12 py-10 lg:px-14">

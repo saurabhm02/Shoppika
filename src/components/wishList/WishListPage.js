@@ -19,7 +19,7 @@ const WishListPage = () => {
     <div className=" border-2 mt-14">
       {
         !isSmallScreen && (
-          <div className="text-xl pt-8 px-6 flex  gap-2">
+          <div className="text-xl pt-10 px-6 flex  gap-2">
             <span className="font-bold">
               My Wishlist
             </span> 
