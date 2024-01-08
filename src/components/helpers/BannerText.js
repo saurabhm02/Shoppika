@@ -28,11 +28,11 @@ const BannerText = ({ title }) => {
         transition={{ duration: 0.7 }}
         className="flex gap-x-4 mt-2"
       >
-        <button className="rounded-full bg-slate-200 hover:bg-white duration-200 text-sm uppercase font-semibold lg:py-3 lg:px-6 md:py-3 md:px-5 sm:py-2 sm:px-3 sm:mt-2">
+        <button className="rounded-full bg-slate-200 hover:bg-white duration-200 text-sm uppercase font-semibold lg:py-3 lg:px-6 md:py-3 md:px-5 sm:py-[6px] sm:px-[10px] sm:mt-2">
           Find out more
         </button>
         <Link to="/products" >
-            <button className="rounded-full bg-slate-200 hover:bg-white duration-200 text-sm uppercase font-semibold lg:py-3 lg:px-6 md:py-3 md:px-5 sm:py-2 sm:px-3 sm:mt-2 ">
+            <button className="rounded-full bg-slate-200 hover:bg-white duration-200 text-sm uppercase font-semibold lg:py-3 lg:px-6 md:py-3 md:px-5 sm:py-[6px] sm:px-[10px] sm:mt-2 ">
             Shop Now
             </button>
         </Link>

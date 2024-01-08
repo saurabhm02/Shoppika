@@ -8,6 +8,9 @@ import ProductDetails from "./components/Products/ProductDetails";
 import Footer from "./components/helpers/Footer";
 import CartPage from "./components/cart/CartPage";
 import WishListPage from "./components/wishList/WishListPage";
+import Login from "./components/Pages/Login";
+import Register from "./components/Pages/Register";
+import { ToastContainer } from 'react-toastify';
 
 export const MyContext = createContext();
 
@@ -23,6 +26,8 @@ const Layout = () => {
         <Route path="/product/:title" element={<ProductDetails />} />
         <Route path="/cart" element={<CartPage/>}/>
         <Route path="/wishlist" element={<WishListPage/>} /> 
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register/>} />
       </Routes>
       <Footer/>
     </div>
@@ -50,6 +55,7 @@ function App() {
   return (
     <MyContext.Provider value={{ products: products, setProducts: setProducts }}>
       <Router>
+        <ToastContainer />
         <Layout />
       </Router>
     </MyContext.Provider>

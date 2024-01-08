@@ -7,7 +7,8 @@ import { useDispatch } from 'react-redux';
 import { addToWishlist } from '../redux/wishlistSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../firebase/config';
 
 const truncateTitle = (title, maxLength) => {
   if (title.length > maxLength) {
@@ -29,39 +30,46 @@ const Product = ({ product }) => {
   const truncatedBrand = truncateBrand(product.brand, 15);
 
   // deconstruct the product
-  const { title, thumbnail, rating, ratingsCount, price, discountPercentage } = product;
+  const {id,  title, thumbnail, rating, ratingsCount, price, discountPercentage } = product;
 
   const [isHovered, setHovered] = useState(false);
   const isSmallScreen = window.innerWidth <= 700;
 
   const dispatch = useDispatch();
 
-  const addwishlistProductHandler = () =>{
-    const savedWishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
-  
-    const existingItem = savedWishlistItems.find((item) => item.id === product.id);
-  
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
+  const addwishlistProductHandler = async () => {
+    try {
+      const savedWishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
+      const existingItem = savedWishlistItems.find((item) => item.id === id);
+
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
         savedWishlistItems.push({ ...product, quantity: 1 });
+      }
+
+      localStorage.setItem('wishlistItems', JSON.stringify(savedWishlistItems));
+
+      dispatch(addToWishlist({ ...product, oneQuantityPrice: price }));
+
+      // Add the item to Firestore
+      const wishlistCollectionRef = collection(db, `wishlist`);
+      await addDoc(wishlistCollectionRef, { ...product, quantity: 1 });
+
+      toast.success(`Success. ${title} is in the wishList!`, {
+        position: 'bottom-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
+    } catch (error) {
+      console.error('Error adding to wishlist:', error);
     }
-  
-    localStorage.setItem('wishlistItems', JSON.stringify(savedWishlistItems));
-  
-    dispatch(addToWishlist({ ...product, oneQuantityPrice: price }));
-  
-    toast.success(`Success. ${title} is in the wishList!`, {
-      position: "bottom-right",            
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  }
+  };
   
 
   return (

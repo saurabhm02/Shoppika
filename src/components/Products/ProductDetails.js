@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/cartSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import { addToWishlist } from '../redux/wishlistSlice';
-
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../firebase/config';
 
 
 const ProductDetails = () => {
@@ -33,62 +34,70 @@ const ProductDetails = () => {
    
   const {id , brand, price, description} = product;
 
-const addProductHandler = () => {
-    const savedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  const addProductHandler = async () => {
+    try {
+      const savedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const existingItem = savedCartItems.find((item) => item.id === id);
 
-    const existingItem = savedCartItems.find((item) => item.id === product.id);
-  
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
-      savedCartItems.push({ ...product, quantity: 1 });
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        savedCartItems.push({ ...product, quantity: 1 });
+      }
+
+      localStorage.setItem('cartItems', JSON.stringify(savedCartItems));
+
+      dispatch(addToCart({ id: id, title: title, price: price }));
+
+      toast.success(`Success. ${title} is in the cart!`, {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
+    } catch (error) {
+      console.error('Error adding to cart:', error);
     }
-
-    localStorage.setItem('cartItems', JSON.stringify(savedCartItems));
-
-    dispatch(addToCart({ id: id, title: title, price: price }));
-
-    toast.success(`Success. ${title} is in the cart!`, {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
   };
-  
 
+  const addwishlistProductHandler = async () => {
+    try {
+      const savedWishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
+      const existingItem = savedWishlistItems.find((item) => item.id === id);
 
-
-  const addwishlistProductHandler = () =>{
-    const savedWishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
-
-    const existingItem = savedWishlistItems.find((item) => item.id === product.id);
-  
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
         savedWishlistItems.push({ ...product, quantity: 1 });
-    }
+      }
 
-    localStorage.setItem('wishlistItems', JSON.stringify(savedWishlistItems));
-  
-    dispatch(addToWishlist({ ...product, oneQuantityPrice: price }));
-  
-    toast.success(`Success. ${title} is in the wishList!`, {
-      position: "bottom-right",            
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  }
+      localStorage.setItem('wishlistItems', JSON.stringify(savedWishlistItems));
+
+      dispatch(addToWishlist({ ...product, oneQuantityPrice: price }));
+
+      // Add the item to Firestore
+      const wishlistCollectionRef = collection(db, `wishlist`);
+      await addDoc(wishlistCollectionRef, { ...product, quantity: 1 });
+
+      toast.success(`Success. ${title} is in the wishList!`, {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
+    } catch (error) {
+      console.error('Error adding to wishlist:', error);
+    }
+  };
+
 
   return (
     <div className=" h-full lg:pt-0 lg:mt-32 md:pt-24 lg:pb-[200px] sm:pt-2 sm:pb-[120px] md:pb-12 lg:py-32 flex items-center lg:overflow-hidden">
