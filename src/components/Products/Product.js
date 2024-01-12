@@ -5,10 +5,8 @@ import { Link } from 'react-router-dom';
 import { FiHeart } from "react-icons/fi";
 import { useDispatch } from 'react-redux';
 import { addToWishlist } from '../redux/wishlistSlice';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../../firebase/config';
 
 const truncateTitle = (title, maxLength) => {
   if (title.length > maxLength) {
@@ -25,56 +23,46 @@ const truncateBrand = (Brand, maxLength) => {
 
 
 const Product = ({ product }) => {
+  // const { addToWishlist } = useContext(wishlistContext);
   const actualPrice = (product.price * 100) / (100 - product.discountPercentage);
   const truncatedTitle = truncateTitle(product.title, 18);
   const truncatedBrand = truncateBrand(product.brand, 15);
 
-  // deconstruct the product
-  const {id,  title, thumbnail, rating, ratingsCount, price, discountPercentage } = product;
+  // here i m deconstruct the product
+  const { title, thumbnail, rating, ratingsCount, price, discountPercentage } = product;
 
   const [isHovered, setHovered] = useState(false);
   const isSmallScreen = window.innerWidth <= 700;
-
   const dispatch = useDispatch();
-
-  const addwishlistProductHandler = async () => {
-    try {
-      const savedWishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
-      const existingItem = savedWishlistItems.find((item) => item.id === id);
-
-      if (existingItem) {
-        existingItem.quantity += 1;
-      } else {
-        savedWishlistItems.push({ ...product, quantity: 1 });
-      }
-
-      localStorage.setItem('wishlistItems', JSON.stringify(savedWishlistItems));
-
-      dispatch(addToWishlist({ ...product, oneQuantityPrice: price }));
-
-      // Add the item to Firestore
-      const wishlistCollectionRef = collection(db, `wishlist`);
-      await addDoc(wishlistCollectionRef, { ...product, quantity: 1 });
-
-      toast.success(`Success. ${title} is in the wishList!`, {
-        position: 'bottom-right',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-      });
-    } catch (error) {
-      console.error('Error adding to wishlist:', error);
-    }
-  };
+  const addwishlistProductHandler = () =>{
+    const savedWishlistItems = JSON.parse(localStorage.getItem('wishlistItems')) || [];
   
-
+    const existingItem = savedWishlistItems.find((item) => item.id === product.id);
+  
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+        savedWishlistItems.push({ ...product, quantity: 1 });
+    }
+  
+    localStorage.setItem('wishlistItems', JSON.stringify(savedWishlistItems));
+  
+    dispatch(addToWishlist({ ...product, oneQuantityPrice: price }));
+  
+    toast.success(`item added in wishList!`, {
+      position: "top-center",            
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }
+  
   return (
     <div className="lg:w-[240px] md:w-[205px] group hover:shadow-xl transition-all duration-2000 ease-in-out relative group sm:w-[160px]">
-      <ToastContainer/>
       <div className="img relative"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -97,7 +85,6 @@ const Product = ({ product }) => {
               className="cursor-pointer object-cover w-full"
             />
           )}
-
         </Link>
         <div className="p-1 absolute bottom-2 left-2 bg-white bg-opacity-70 text-xs font-semibold rounded z-10 flex items-center">
           {rating} <span className="pl-1 pr-1 text-sm text-green-600"><FaStar /></span> | {ratingsCount}
@@ -108,7 +95,6 @@ const Product = ({ product }) => {
           </div>
         </div>
       </div>
-
       <div className="content text-left flex flex-col py-0 px-2 ">
         <div className="det relative justify-end overflow-hidden">
 
@@ -125,7 +111,6 @@ const Product = ({ product }) => {
             </button>
           </div>
         </div>
-
         <div className="product-price flex gap-2 items-center">
           <p className="font-bold ">Rs. {price}</p>
           <div className="price-right text-xs flex gap-1">
@@ -137,5 +122,4 @@ const Product = ({ product }) => {
     </div>
   );
 };
-
 export default Product;

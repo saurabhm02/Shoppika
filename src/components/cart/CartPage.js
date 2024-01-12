@@ -5,27 +5,29 @@ import { RxCross2 } from "react-icons/rx";
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem';
 import { loadCartItems, removeFromCart } from '../redux/cartSlice';
+import { selectIsLoggedIn } from '../redux/authSlice';
 
 
 const CartPage = () => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
+  const isLoggedIn = useSelector(selectIsLoggedIn);  
+  // (state) => state.auth.isLoggedIn
+
   console.log("product cartpage", cartItems);
-  // const [totalAmount, setTotalAmount] = useState(" ");
+
 
 
   useEffect(() => {
     const savedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     dispatch(loadCartItems(savedCartItems));
   }, [dispatch]);
-
   const subTotal = useMemo(() => {
     return cartItems.reduce(
         (total, val) => total + val.price,
         0
     );
 }, [cartItems]);
-
   // useEffect(() => {
   //   if(totalAmount <= 200){
   //     setShippingFee(60);
@@ -43,9 +45,10 @@ const CartPage = () => {
 
 
   return(
-     <div className="lg:py-20 sm:py-20 w-full md:py-10">
-      <div>
-        {cartItems.length > 0 ? (
+     <div className="py-10 w-full md:py-10">
+      { isLoggedIn ? (
+        <div>
+          {cartItems.length > 0 ? (
           <div className="flex flex-col lg:flex-row gap-12 py-10 lg:px-14">
             <div className="flex-[2]">
               <div className="text-xl font-bold">
@@ -55,7 +58,7 @@ const CartPage = () => {
                     <CartItem key={item.id} item={item} />
                   ))}
             </div>
-                 
+
             <div className="flex-[1]">
                 <div className="text-xl font-bold">Summary</div>
 
@@ -82,7 +85,7 @@ const CartPage = () => {
 
                           <div className="w-full flex flex-col pl-5">
                             <div className="flex flex-col md:flex-row justify-between">
-                                      
+
                               <div className="flex flex-col">
                                 <div className="text-sm font-semibold text-black/[0.8]">
                                   {item.title}
@@ -92,7 +95,7 @@ const CartPage = () => {
                                 </div>
                               </div>
 
-                                    
+
                               <div className="text-sm  font-bold text-black/[0.5] mt-2">
                                  MRP : &#8377;{item?.price}
                               </div>
@@ -136,10 +139,10 @@ const CartPage = () => {
                 </Link>
 
             </div>
-             
+
           </div>
 
-          ) : (
+            ) : (
             <div className="flex-[2] flex flex-col items-center pb-[50px] md:-mt-14">
               <img
                   src={emptyBanner}
@@ -164,10 +167,17 @@ const CartPage = () => {
                 </Link>
             </div>
           )}
- 
         </div>
+      ) : (
+        <Link to="/login">
+          <div className='h-screen cursor-pointer flex flex-col justify-center items-center'> 
+            <div className='bg-orange-500 rounded text-white font-medium p-2'>
+              Please Login
+            </div>
+          </div>
+        </Link>
+      )}
      </div>
   )
 }
-
 export default CartPage

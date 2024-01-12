@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { FiShoppingCart, FiSearch } from 'react-icons/fi';
 import { FaS } from 'react-icons/fa6';
 import { BsBag, BsArrowLeftShort } from 'react-icons/bs';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { SlHeart } from 'react-icons/sl';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdArrowBack } from "react-icons/md";
@@ -60,8 +60,8 @@ const Header = () => {
     .then(() => {
       toast.success("Logout Successful!..");
       navigate("/");
-    }).
-    catch((error) => {
+    })
+    .catch((error) => {
       toast.error(error.message);
     });
   };
@@ -123,11 +123,16 @@ const Header = () => {
             <Link to="/cart">
               <div className="cart text-2xl lg:pl-5 lg:pr-3 sm:pr-1 sm:mx-2 relative">
                 <BsBag className="cursor-pointer" size={26} />
-                {cartItems.length > 0 && (
-                  <div className="bg-red-500 text-white absolute right-[8px] -bottom-[-8px] text-[16px] w-[17px] h-[18px] rounded-full flex justify-center items-center">
-                    {cartItems.length}
-                  </div>
-                )}
+                  {isLoggedIn ? (
+                    cartItems.length > 0 && (
+                      <div className="bg-red-500 text-white absolute right-[8px] -bottom-[-8px] text-[16px] w-[17px] h-[18px] rounded-full flex justify-center items-center">
+                        {cartItems.length}
+                      </div>
+                    )
+                  ) : (
+                    <></>
+                  )}
+
               </div>
             </Link>
 
@@ -206,7 +211,7 @@ const Header = () => {
             <MdArrowBack size={30} className="cursor-pointer" />
             
           </div>
-          <div className="name font-bold text-2xl">
+          <div className="name font-bold text-xl">
             Shopping Bag
           </div>
         </div>
@@ -282,7 +287,6 @@ const Header = () => {
       return product.title?.toLowerCase().includes(searchQuery.toLowerCase());
     });
     setFilteredProducts(filtered);
-    console.log(filteredProducts);
   }, [searchQuery]);
 
 
@@ -423,7 +427,7 @@ const Header = () => {
             </ShowOnLogin>
             <ShowOnLogout>
                 <Link to="/login"
-                  className={`group rounded-md ${location.pathname === "/login" ? "text-red-500" : "text-black"} lg:text-xl mr-1`}
+                  className={`group rounded-md ${location.pathname === "/login" ? "text-white" : "text-white"} lg:text-xl mr-1  bg-black p-[2px] pb-2`}
                 >
                   <button
                     className={`lg:mx-5 lg:py-[3px] sm:mx-1 cursor-pointer

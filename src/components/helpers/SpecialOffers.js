@@ -4,6 +4,7 @@ import Slider from 'react-slick';
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from 'react-icons/fa';
 import { MyContext } from '../../App';
 import Product from '../Products/Product';
+import ShimmerCard from './Shimmer';
 
 const SpecialOffers = () => {
 
@@ -98,21 +99,31 @@ const SpecialOffers = () => {
                 className="text-4xl font-sans font-semibold pb-6"
             > Special Offers
             </motion.div>
-            <Slider {...settings}>
+            {products.length === 0 ? (
+              <Slider {...settings}>
+                {Array(5).fill(null).map((_, index) => (
+                  <div key={index} className="px-3">
+                    <ShimmerCard />
+                  </div>
+                ))}
+              </Slider>
+            ) : (
+              <Slider {...settings}>
                 {products
-                    .filter((product) => product.discountPercentage >= 20)
-                    .map((product) => (
-                        <motion.div
-                            initial={{ x: 50, opacity: 0 }}
-                            whileInView={{ x: 0, opacity: 1 }}
-                            transition={{ duration: 0.7 }} 
-                            key={product.id}
-                            className="px-3"      
-                        >
-                        <Product product={product} />
-                        </motion.div>
-                    ))}
-            </Slider>
+                  .filter((product) => product.discountPercentage >= 20)
+                  .map((product) => (
+                    <motion.div
+                      initial={{ x: 50, opacity: 0 }}
+                      whileInView={{ x: 0, opacity: 1 }}
+                      transition={{ duration: 0.7 }}
+                      key={product.id}
+                      className="px-3"
+                    >
+                      <Product product={product} />
+                    </motion.div>
+                  ))}
+              </Slider>
+            )}
         </div>
       );
 }

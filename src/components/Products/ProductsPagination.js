@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProductItem from './ProductItem';
 import ReactPaginate from 'react-paginate';
 import { motion } from 'framer-motion';
+import ShimmerCard from '../helpers/Shimmer';
 
 const ProductsPagination = ({ itemsPerPage, products, setProducts, selectedCategories, selectedBrands }) => {
   const [itemOffset, setItemOffset] = useState(0);
@@ -37,7 +38,11 @@ const ProductsPagination = ({ itemsPerPage, products, setProducts, selectedCateg
         transition={{ duration: 0.7 }}
         className="grid items-end place-items-center  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-full mx-auto space-y-12 space-x-1 min-h-[80vh] lg:py-4 sm:py-10 md:py-4 pr-5"
       >
-        <ProductItem currentItems={currentItems} />
+        {currentItems.length === 0 ? (
+          Array(10).fill("").map((_, index) => <ShimmerCard key={index} />)
+        ) : (
+          <ProductItem currentItems={currentItems} />
+        )}
       </motion.div>
       <ReactPaginate
         nextLabel=""

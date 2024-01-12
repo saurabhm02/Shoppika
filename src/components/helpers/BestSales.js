@@ -4,6 +4,7 @@ import { FaLongArrowAltLeft, FaLongArrowAltRight } from 'react-icons/fa';
 import { MyContext } from '../../App';
 import Product from '../Products/Product';
 import { motion } from 'framer-motion';
+import ShimmerCard from './Shimmer';
 
 const BestSales = () => {
   const { products } = useContext(MyContext);
@@ -97,19 +98,29 @@ const BestSales = () => {
         className="text-4xl font-semibold pb-6"
       > Best Sales</motion.div>
 
-      <Slider {...settings}>
-        {products.slice(0, 10)
-          .filter((product) => product.ratingsCount >= 600)
-          .map((product) => (
-          <div
-            
-            key={product.id}
-            className="px-4"
-          >
-            <Product product={product} />
-          </div>
-        ))}
-      </Slider>
+      { products.length === 0 ? (
+        <Slider {...settings}>
+          {Array(5).fill(null).map((_, index) => (
+            <div key={index} className="px-3">
+              <ShimmerCard />
+            </div>
+          ))}
+        </Slider>
+      ) :  (
+        <Slider {...settings}>
+          {products.slice(0, 10)
+            .filter((product) => product.ratingsCount >= 600)
+            .map((product) => (
+            <div
+              
+              key={product.id}
+              className="px-4"
+            >
+              <Product product={product} />
+            </div>
+          ))}
+        </Slider>
+      )}
     </div>
   );
 };

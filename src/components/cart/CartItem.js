@@ -35,8 +35,8 @@ const CartItem = ({item}) => {
     
         dispatch(addToWishlist({ ...item, oneQuantityPrice: item.price }));
     
-        toast.success(`${item.title} is moved to wishlist!`, {
-            position: "bottom-right",
+        toast.success(`item is moved to wishlist!`, {
+            position: "bottom-center",
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -50,8 +50,8 @@ const CartItem = ({item}) => {
 
     const removeHandler = ()=>{
         dispatch(removeFromCart({ id: item.id }));
-        toast.error(`${item.title} is removed from cart!`, {
-            position: "bottom-right",
+        toast.error(`item is removed from cart!`, {
+            position: "bottom-center",
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
