@@ -18,13 +18,6 @@ const Login = () => {
     const previousUrl = useSelector(selectPreviousUrl);
     const navigate = useNavigate();
 
-    const redirectUser = () => {
-        if(previousUrl.includes("cart")){
-            return navigate("/cart");
-        }
-        navigate("/");
-    };
-
     const loginUser = (e) =>{
         e.preventDefault();
         console.log(email, password);
@@ -43,7 +36,7 @@ const Login = () => {
                 theme: "light",
               });
             setIsLoading(false);
-            navigate("/");
+            navigate(-1);
         })
         .catch((err) =>{
             setIsLoading(false);
@@ -58,9 +51,11 @@ const Login = () => {
       .then((result) =>{
          console.log(result);
          toast.success("Login Successful!..");
-         redirectUser();
+        //  redirectUser();
+         navigate(-1);
        }).catch((err) =>{
          toast.error(err.message);
+         console.log(err);
       } );
     };
 
